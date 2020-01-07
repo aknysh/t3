@@ -1,0 +1,7 @@
+.git
+.gitignore
+.editorconfig
+.idea
+*.iml
+.build-harness
+build-harness
