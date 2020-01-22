@@ -14,8 +14,9 @@ jobs:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
           script: |
             github.issues.addLabels({
-              issue_number: ${{ github.event.client_payload.pull_request.number }},
-              repo: '${{ github.event.client_payload.pull_request.head.repo.full_name }}',
+              issue_number: 16,
+              owner: 'cloudposse',
+              repo: 'actions',
               labels: ['Triage']
             })
 
