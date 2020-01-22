@@ -13,7 +13,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
           script: |
-            const changedFilesResponse = await client.pulls.listFiles({
+            const changedFilesResponse = await github.pulls.listFiles({
               pull_number: 16,
               owner: 'cloudposse',
               repo: 'actions'
