@@ -1,0 +1,39 @@
+name: Greet on first interaction
+on:
+  repository_dispatch:
+    types: [first-interaction-greet-command]
+
+jobs:
+  first-interaction-greet:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Greet on first interaction
+        uses: actions/github-script@0.4.0
+        with:
+          github-token: ${{secrets.GITHUB_BOT_TOKEN}}
+          script: |
+            const changedFilesResponse = await github.pulls.listFiles({
+              pull_number: 16,
+              owner: 'cloudposse',
+              repo: 'actions'
+            });
+
+            // Max length of labels is 50 chars
+            const changedFiles = changedFilesResponse.data.map(f => f.filename.substring(f.filename.length - 50));
+
+            github.issues.addLabels({
+              issue_number: 16,
+              owner: 'cloudposse',
+              repo: 'actions',
+              labels: [...changedFiles]
+            });
+
+      # Add reaction to the original comment
+      - name: Add reaction to the original comment
+        uses: cloudposse/actions/github/create-or-update-comment@0.11.0
+        with:
+          token: ${{ secrets.GITHUB_BOT_TOKEN }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          reaction-type: hooray
