@@ -13,12 +13,20 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
           script: |
+            const changedFilesResponse = await client.pulls.listFiles({
+              pull_number: 16,
+              owner: 'cloudposse',
+              repo: 'actions'
+            });
+
+            const changedFiles = changedFilesResponse.data.map(f => f.filename);
+
             github.issues.addLabels({
-              issue_number: ${{ github.event.client_payload.pull_request.number }},
-              owner: '${{ github.event.client_payload.pull_request.head.repo.owner.login }}',
-              repo: ${{ github.event.client_payload.pull_request.head.repo.full_name }},
-              labels: ['Triage']
-            })
+              issue_number: 16,
+              owner: 'cloudposse',
+              repo: 'actions',
+              labels: [...changedFiles]
+            });
 
       # Add reaction to the original comment
       - name: Add reaction to the original comment
