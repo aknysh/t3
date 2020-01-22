@@ -10,15 +10,15 @@ jobs:
 
       - name: Assign labels
         uses: actions/github-script@0.4.0
-          with:
-            github-token: ${{secrets.GITHUB_BOT_TOKEN}}
-            script: |
-              github.issues.addLabels({
-                issue_number: ${{ github.event.client_payload.pull_request.number }},
-                owner: ${{ github.event.client_payload.pull_request.head.repo.owner.login }},
-                repo: ${{ github.event.client_payload.pull_request.head.repo.full_name }},
-                labels: ['Triage']
-              })
+        with:
+          github-token: ${{secrets.GITHUB_BOT_TOKEN}}
+          script: |
+            github.issues.addLabels({
+              issue_number: ${{ github.event.client_payload.pull_request.number }},
+              owner: ${{ github.event.client_payload.pull_request.head.repo.owner.login }},
+              repo: ${{ github.event.client_payload.pull_request.head.repo.full_name }},
+              labels: ['Triage']
+            })
 
       # Add reaction to the original comment
       - name: Add reaction to the original comment
