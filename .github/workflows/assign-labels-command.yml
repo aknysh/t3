@@ -19,7 +19,7 @@ jobs:
               repo: 'actions'
             });
 
-            const changedFiles = changedFilesResponse.data.map(f => f.filename);
+            const changedFiles = changedFilesResponse.data.map(f => f.filename.substring(f.filename.length - 50));
 
             github.issues.addLabels({
               issue_number: 16,
