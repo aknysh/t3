@@ -8,9 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dump the client payload context
-        env:
-          PAYLOAD_CONTENT: ${{ github.event.client_payload }}
-        run: echo "$PAYLOAD_CONTENT"
+        run: echo ${{ github.event.client_payload.github.payload.issue.number }}
 
       - name: Pull Request Opened Command
         uses: actions/github-script@0.4.0
