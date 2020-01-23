@@ -1,13 +1,13 @@
-name: Greet contributor
+name: Pull Request Opened Command
 on:
   repository_dispatch:
-    types: [greet-contributor-command]
+    types: [pr-opened-command]
 
 jobs:
   greet-contributor:
     runs-on: ubuntu-latest
     steps:
-      - name: Greet contributor
+      - name: Pull Request Opened Command
         uses: actions/github-script@0.4.0
         with:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
