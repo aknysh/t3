@@ -17,7 +17,7 @@ jobs:
 
             console.log('Executing Greet contributor script');
 
-            const creator = 'cp_test_2';
+            const creator = 'aknysh';
             const issueNumber = 16;
             const owner = 'cloudposse';
             const repo = 'actions';
