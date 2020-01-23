@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dump the client payload context
-        run: echo ${{ github.event.client_payload.github.payload.issue.number }}
+        run: echo ${{ github.event.client_payload.github.event.pull_request.number }}
 
       - name: Pull Request Opened Command
         uses: actions/github-script@0.4.0
@@ -16,15 +16,15 @@ jobs:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
           script: |
 
-            // const issueNumber = ${{ github.event.client_payload.github.payload.issue.number }};
-            // const owner = '${{ github.event.client_payload.github.payload.repository.owner.login }}';
-            // const repo = '${{ github.event.client_payload.github.payload.repository.name }}';
-            // const creator = '${{ github.event.client_payload.github.payload.sender.login }}';
+            // const issueNumber = ${{ github.event.client_payload.github.event.pull_request.number }};
+            // const owner = '${{ github.event.client_payload.github.event.repository.owner.login }}';
+            // const repo = '${{ github.event.client_payload.github.event.repository.name }}';
+            // const creator = '${{ github.event.client_payload.github.event.pull_request.user.login }}';
 
             const issueNumber = 16;
             const owner = 'cloudposse';
             const repo = 'actions';
-            const creator = 'aknyshtest';
+            const creator = 'aknysh';
 
             // Greet contributor
             console.log('Executing Greet contributor script');
