@@ -15,6 +15,8 @@ jobs:
             // Get a list of all issues created by the PR opener
             // See: https://octokit.github.io/rest.js/#pagination
 
+            console.log('Executing Greet contributor script');
+
             const creator = ${{ github.event.client_payload.pull_request.user.login }};
             const issueNumber = 16;
             const owner = 'cloudposse';
