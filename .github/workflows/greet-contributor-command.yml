@@ -21,6 +21,8 @@ jobs:
             const issueNumber = 16;
             const owner = 'cloudposse';
             const repo = 'actions';
+            let firstTimeContributor = true;
+            let message = '';
 
             const opts = github.issues.listForRepo.endpoint.merge({
               owner: owner,
@@ -37,22 +39,33 @@ jobs:
               }
 
               if (issue.pull_request) {
-                console.log('PR creator is already a contributor, skipping');
-                return;
+                firstTimeContributor = false;
+                break;
               }
             }
 
-            console.log('PR creator is a first time contributor, creating a comment to greet the creator');
+            if (firstTimeContributor) {
+              console.log('PR creator is a first time contributor');
 
-            const message = `
-            Welcome @${creator}
+              message = `
+              Welcome @${creator}
 
-            Thank you for submitting this PR! If you haven't already [joined our slack community](https://slack.sweetops.com), then we invite you to do so.
+              Thank you for submitting this PR! If you haven't already [joined our slack community](https://slack.sweetops.com), then we invite you to do so.
 
-            We receive an overwhelming number of contributions. By joining our slack, we'll be able to review your PR faster.
+              We receive an overwhelming number of contributions. By joining our slack, we'll be able to review your PR faster.
 
-            [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
-            `;
+              [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+              `;
+            }
+            else {
+              console.log('PR creator is already a contributor');
+
+              message = `
+              @${creator} thanks again for your contribution!
+
+              We will review this PR shortly.
+              `;
+            }
 
             await github.issues.createComment({
               issue_number: issueNumber,
@@ -60,12 +73,3 @@ jobs:
               repo: repo,
               body: message
             });
-
-      # Add reaction to the original comment
-      - name: Add reaction to the original comment
-        uses: cloudposse/actions/github/create-or-update-comment@0.11.0
-        with:
-          token: ${{ secrets.GITHUB_BOT_TOKEN }}
-          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
-          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
-          reaction-type: hooray
