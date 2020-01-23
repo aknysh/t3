@@ -13,20 +13,18 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
           script: |
-            const changedFilesResponse = await github.pulls.listFiles({
+            await github.pulls.createReviewRequest({
               pull_number: 16,
               owner: 'cloudposse',
-              repo: 'actions'
+              repo: 'actions',
+              team_reviewers: ['reviewers']
             });
 
-            // Max length of labels is 50 chars
-            const changedFiles = changedFilesResponse.data.map(f => f.filename.substring(f.filename.length - 50));
-
-            github.issues.addLabels({
+            await github.issues.addAssignees({
               issue_number: 16,
               owner: 'cloudposse',
               repo: 'actions',
-              labels: [...changedFiles]
+              assignees: ['${{ github.event.client_payload.pull_request.user.login }}']
             });
 
       # Add reaction to the original comment
