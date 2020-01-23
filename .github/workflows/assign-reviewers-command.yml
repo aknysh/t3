@@ -17,7 +17,7 @@ jobs:
               pull_number: 16,
               owner: 'cloudposse',
               repo: 'actions',
-              team_reviewers: ['@cloudposse/reviewers']
+              team_reviewers: ['cloudposse/reviewers']
             });
 
             await github.issues.addAssignees({
