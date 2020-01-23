@@ -16,9 +16,9 @@ jobs:
             // See: https://octokit.github.io/rest.js/#pagination
 
             const creator = ${{ github.event.client_payload.pull_request.user.login }};
-            const issueNumber = 16; // ${{ github.event.client_payload.pull_request.number }};
-            const owner = 'cloudposse'; // ${{ github.event.client_payload.pull_request.head.repo.owner.login }}
-            const repo = 'actions'; // ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+            const issueNumber = 16;
+            const owner = 'cloudposse';
+            const repo = 'actions';
 
             const opts = github.issues.listForRepo.endpoint.merge({
               owner: owner,
