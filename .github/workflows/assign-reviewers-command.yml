@@ -13,11 +13,13 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
           script: |
+            const reviewers = ['aknysh', 'cloudpossebot'].filter((val) => val !== '${{ github.event.client_payload.pull_request.user.login }}');
+
             await github.pulls.createReviewRequest({
               pull_number: 16,
               owner: 'cloudposse',
               repo: 'actions',
-              reviewers: ['cloudpossebot']
+              reviewers: reviewers
             });
 
             await github.issues.addAssignees({
