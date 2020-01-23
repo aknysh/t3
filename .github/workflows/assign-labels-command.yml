@@ -13,19 +13,25 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
           script: |
+
+            const creator = ${{ github.event.client_payload.pull_request.user.login }};
+            const issueNumber = 16; // ${{ github.event.client_payload.pull_request.number }};
+            const owner = 'cloudposse'; // ${{ github.event.client_payload.pull_request.head.repo.owner.login }}
+            const repo = 'actions'; // ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+
             const changedFilesResponse = await github.pulls.listFiles({
-              pull_number: 16,
-              owner: 'cloudposse',
-              repo: 'actions'
+              pull_number: issueNumber,
+              owner: owner,
+              repo: repo
             });
 
             // Max length of labels is 50 chars
             const changedFiles = changedFilesResponse.data.map(f => f.filename.substring(f.filename.length - 50));
 
             await github.issues.addLabels({
-              issue_number: 16,
-              owner: 'cloudposse',
-              repo: 'actions',
+              issue_number: issueNumber,
+              owner: owner,
+              repo: repo,
               labels: [...changedFiles]
             });
 
