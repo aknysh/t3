@@ -17,7 +17,7 @@ jobs:
 
             console.log('Executing Greet contributor script');
 
-            const creator = '${{ github.event.client_payload.pull_request.user.login }}';
+            const creator = 'cp_test_1';
             const issueNumber = 16;
             const owner = 'cloudposse';
             const repo = 'actions';
@@ -46,6 +46,12 @@ jobs:
 
             const message = `
                               Welcome @${creator}!
+
+                              Thank you for submitting this PR! If you haven't already [joined our slack community](https://slack.sweetops.com), then we invite you to do so.
+
+                              We receive an overwhelming number of contributions. By joining our slack, we'll be able to review your PR faster.
+
+                              [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
                             `;
 
             await github.issues.createComment({
