@@ -14,7 +14,7 @@ jobs:
           github-token: ${{secrets.GITHUB_BOT_TOKEN}}
           script: |
 
-            const creator = ${{ github.event.client_payload.pull_request.user.login }};
+            const creator = '${{ github.event.client_payload.pull_request.user.login }}';
             const issueNumber = 16;
             const owner = 'cloudposse';
             const repo = 'actions';
